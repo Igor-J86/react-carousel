@@ -1,6 +1,21 @@
 import React, {useEffect} from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
-import { carousel, style } from './types';
+import "./style/carousel.css";
+
+export type carousel = {
+  children: any
+  id?: string
+  autoplay?: boolean
+  cards?: number
+  width?: string
+  interval?: number
+  singleScroll?: boolean
+}
+
+export type style = {
+  wrapper:object
+  carousel:object
+}
 
 export const Carousel:React.FC<carousel> = ({
   children,

@@ -2,11 +2,17 @@
   "name": "@igor-j86/react-carousel",
   "version": "1.0.0",
   "description": "A responsive React carousel",
-  "main": "index.js",
+  "module": "./lib/esm/index.js",
+  "main": "./lib/cjs/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d dist --extensions .ts,.tsx",
-    "prepublishOnly": "npm run build"
+    "clean": "rimraf lib",
+    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 src/**/*.css lib/esm/style && copyfiles -u 1 src/**/*.css lib/cjs/style",
+    "tsc": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run copy-files",
+    "prepare": "npm run tsc"
   },
   "repository": {
     "type": "git",
@@ -23,14 +29,11 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.8",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/preset-typescript": "^7.23.3",
     "@types/react": "^18.0.34",
+    "copyfiles": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rimraf": "^5.0.5",
     "typescript": "^5.0.4"
   }
 }

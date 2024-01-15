@@ -1,0 +1,101 @@
+.carousel-wrapper {
+  max-width: 1000px;
+  width: 100%;
+  position: relative;
+  margin: auto;
+
+  & .carousel-arrow {
+    position: absolute;
+    background: hsl(235, 70%, 70%);
+    box-shadow: 0 3px 6px hsla(0, 0%, 5%, 0.7);
+    border: none;
+    width: 3rem;
+    height: 3rem;
+    max-height: unset;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    & svg {
+      fill: hsl(247, 20%, 12%);
+    }
+
+    &:active {
+      background: hsl(247, 70%, 60%);
+    }
+
+    &.left {
+      left: -1.5rem;
+    }
+
+    &.right {
+      right: -1.5rem;
+    }
+  }
+
+  & .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% / 3) - 12px);
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &.dragging {
+      scroll-snap-type: none;
+      scroll-behavior: auto;
+    }
+
+    &.dragging .card {
+      cursor: grab;
+      user-select: none;
+    }
+
+    &.no-event .card {
+      pointer-events: none;
+    }
+
+    &.no-transition {
+      scroll-behavior: auto;
+    }
+
+    & .card {
+      background: hsl(247, 20%, 12%);
+      border-radius: 3px;
+      min-height: 20rem;
+      box-shadow: 0 2px 2px hsla(0, 0%, 5%, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      scroll-snap-align: start;
+
+      &:hover {
+        background: hsl(247, 20%, 5%);
+      }
+    }
+
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .carousel-wrapper .carousel {
+    grid-auto-columns: calc((100%  / 2) - 9px) !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel-wrapper .carousel {
+    grid-auto-columns: 100% !important;
+  }
+}

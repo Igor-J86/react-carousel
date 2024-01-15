@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./lib/esm",
+    "outDir": "./lib/cjs",
     "allowJs": true,
     "lib": [
       "DOM",
@@ -8,7 +8,7 @@
       "ESNext"
     ],
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "jsx": "react",
     "moduleResolution": "node",
     "declaration": true,

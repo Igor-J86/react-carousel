@@ -1,8 +1,12 @@
 import React from "react"
-import { iconprops } from "./types";
 
 let defaultWidth = 24;
 let defaultColor = "icon-fill";
+
+export type iconprops = {
+  width?: number,
+  color?: string
+}
 
 export const ArrowLeft:React.FC<iconprops> = ({ width, color }) => {
   return(
