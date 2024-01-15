@@ -1,0 +1,36 @@
+{
+  "name": "@igor-j86/react-carousel",
+  "version": "1.0.0",
+  "description": "A responsive React carousel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist --extensions .ts,.tsx",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Igor-J86/react-carousel.git"
+  },
+  "author": "Igor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Igor-J86/react-carousel/issues"
+  },
+  "homepage": "https://github.com/Igor-J86/react-carousel#readme",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/react": "^18.0.34",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.4"
+  }
+}

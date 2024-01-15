@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "system",
+    "jsx": "react",
+    "moduleResolution": "node",
+  }
+}
