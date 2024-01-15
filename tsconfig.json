@@ -13,12 +13,13 @@
     "moduleResolution": "node",
     "declaration": true,
     "typeRoots": [
-      "./src/types.d.ts",
+      "index.d.ts",
       "node_modules/@types"
     ]
   },
   "include": [
-    "src"
+    "src",
+    "src/**/*.css"
   ],
   "exclude": [
     "node_modules"

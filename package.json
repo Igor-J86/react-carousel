@@ -1,6 +1,6 @@
 {
   "name": "@igor-j86/react-carousel",
-  "version": "1.0.0",
+  "version": "1.1.9",
   "description": "A responsive React carousel",
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",
@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf lib",
-    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 src/**/*.css lib/esm/style && copyfiles -u 1 src/**/*.css lib/cjs/style",
+    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 src/**/*.css lib",
     "tsc": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run copy-files",
     "prepare": "npm run tsc"
   },
