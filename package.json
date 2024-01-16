@@ -1,6 +1,6 @@
 {
   "name": "@igor-j86/react-carousel",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A responsive React carousel",
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",
