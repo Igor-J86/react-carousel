@@ -12,7 +12,8 @@
     "clean": "rimraf lib",
     "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 src/**/*.css lib",
     "tsc": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run copy-files",
-    "prepare": "npm run tsc"
+    "prepare": "npm run tsc",
+    "start": "vite"
   },
   "repository": {
     "type": "git",
@@ -29,11 +30,13 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.34",
+    "@types/react": "^18.2.48",
+    "@vitejs/plugin-react": "^4.2.1",
     "copyfiles": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vite": "^5.0.11"
   }
 }

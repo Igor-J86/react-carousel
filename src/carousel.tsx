@@ -10,6 +10,7 @@ export type carousel = {
   width?: string
   interval?: number
   singleScroll?: boolean
+  customClass?: string
 }
 
 export type style = {
@@ -24,7 +25,8 @@ export const Carousel:React.FC<carousel> = ({
   cards = 3,
   width = '1000px',
   interval = 2500,
-  singleScroll = false
+  singleScroll = false,
+  customClass
 }) => {
 
   const carouselStyle:style = {
@@ -41,8 +43,12 @@ export const Carousel:React.FC<carousel> = ({
     if(carousel) {
       const carouselWrapper:HTMLDivElement = carousel.parentElement
       const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll(".carousel-arrow")
-      const firstCardWidth:number = carousel.querySelector(".card").offsetWidth
+      
       const carouselChildren:Array<HTMLElement> = [...carousel.children]
+      carouselChildren.forEach((card) => {
+        card.setAttribute('draggable', 'false')
+        card.classList.add('card')
+      })
 
       let isDragging:boolean = false
       let startX:number
@@ -51,10 +57,6 @@ export const Carousel:React.FC<carousel> = ({
 
       //let cardPerView:number = Math.round(carousel.offsetWidth / firstCardWidth)
 
-      carouselChildren.forEach((card) => {
-        card.setAttribute('draggable', 'false')
-      })
-
       carouselChildren.slice(-cards).reverse().forEach(card => {
         carousel.insertAdjacentHTML("afterbegin", card.outerHTML)
       })
@@ -62,6 +64,8 @@ export const Carousel:React.FC<carousel> = ({
       carouselChildren.slice(0,cards).forEach(card => {
         carousel.insertAdjacentHTML("beforeend", card.outerHTML)
       })
+
+      const firstCardWidth:number = carousel.querySelector(".card").offsetWidth
 
       arrowBtns.forEach((btn:HTMLButtonElement) => (
         btn.addEventListener("click", () => {
@@ -126,7 +130,7 @@ export const Carousel:React.FC<carousel> = ({
   }, [])
 
   return (
-    <div className="carousel-wrapper" style={carouselStyle.wrapper}>
+    <div className={`ijrc-carousel-wrapper${customClass && customClass.length > 0 ? ' ' + customClass : ''}`} style={carouselStyle.wrapper}>
       <button className="carousel-arrow left" id={`${id}-carousel-left`}>
         <ArrowLeft width={10} />
       </button>
