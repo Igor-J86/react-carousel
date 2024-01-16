@@ -1,3 +1,11 @@
+:root {
+  --ijrc-light-bg: hsl(247, 5%, 92%);
+  --ijrc-blue: hsl(247, 70%, 40%);
+  --ijrc-light-blue: hsl(247, 70%, 50%);
+  --ijrc-white: hsl(0, 0%, 99%);
+  --ijrc-drop-shadow: hsla(0, 0%, 85%, 0.7);
+}
+
 .ijrc-carousel-wrapper {
   max-width: 1000px;
   width: 100%;
@@ -6,12 +14,15 @@
 
   & .carousel-arrow {
     position: absolute;
-    background: hsl(247, 70%, 40%);
-    box-shadow: 0 3px 6px hsla(0, 0%, 85%, 0.7);
+    background: var(--ijrc-blue);
+    box-shadow: 0 3px 6px var(--ijrc-drop-shadow);
     border: none;
     width: 3rem;
     height: 3rem;
     max-height: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     margin: 0;
     padding: 0;
@@ -19,11 +30,11 @@
     transform: translateY(calc(-50% + 5px));
 
     & svg {
-      fill: hsl(0, 0%, 99%);
+      fill: var(--ijrc-white);
     }
 
     &:active {
-      background: hsl(247, 70%, 50%);
+      background: var(--ijrc-light-blue);
     }
 
     &.left {
@@ -69,10 +80,10 @@
     }
 
     & .card {
-      background: hsl(0, 0%, 99%);
+      background: var(--ijrc-white);
       border-radius: 3px;
       min-height: 4rem;
-      box-shadow: 0 2px 2px hsla(0, 0%, 85%, 0.7);
+      box-shadow: 0 2px 2px var(--ijrc-drop-shadow);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -81,7 +92,7 @@
       scroll-snap-align: start;
 
       &:hover {
-        background: hsl(247, 5%, 92%);
+        background: var(--ijrc-light-bg);
       }
     }
 
@@ -89,13 +100,13 @@
 }
 
 @media only screen and (max-width: 900px) {
-  .carousel-wrapper .carousel {
+  .ijrc-carousel-wrapper .carousel {
     grid-auto-columns: calc((100%  / 2) - 9px) !important;
   }
 }
 
 @media only screen and (max-width: 600px) {
-  .carousel-wrapper .carousel {
+  .ijrc-carousel-wrapper .carousel {
     grid-auto-columns: 100% !important;
   }
 }

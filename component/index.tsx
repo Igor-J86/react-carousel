@@ -1,6 +1,6 @@
 import React from "react";
 import {createRoot} from 'react-dom/client';
-import { Carousel } from "../lib/esm/";
+import { Carousel } from "../src/carousel";
 
 const root = createRoot(document.getElementById('carousel-root')!);
 

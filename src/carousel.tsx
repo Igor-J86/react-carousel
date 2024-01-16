@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
-import "../style/carousel.css";
+import "../style/ijrc-carousel.css";
 
 export type carousel = {
   children: any
@@ -69,7 +69,7 @@ export const Carousel:React.FC<carousel> = ({
 
       arrowBtns.forEach((btn:HTMLButtonElement) => (
         btn.addEventListener("click", () => {
-          carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll ? cards * -firstCardWidth : -firstCardWidth : !singleScroll ? cards * firstCardWidth : firstCardWidth
+          carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth < 600 ? cards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth < 600 ? cards * firstCardWidth : firstCardWidth
         })
       ))
 
