@@ -2,6 +2,12 @@
   "name": "@igor-j86/react-carousel",
   "version": "1.2.2",
   "description": "A responsive React carousel",
+  "keywords": [
+    "react",
+    "frontend",
+    "carousel",
+    "component"
+  ],
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",
   "files": [
