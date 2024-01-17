@@ -99,12 +99,6 @@
   }
 }
 
-@media only screen and (max-width: 900px) {
-  .ijrc-carousel-wrapper .carousel {
-    grid-auto-columns: calc((100%  / 2) - 9px) !important;
-  }
-}
-
 @media only screen and (max-width: 600px) {
   .ijrc-carousel-wrapper .carousel {
     grid-auto-columns: 100% !important;

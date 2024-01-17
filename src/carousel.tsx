@@ -22,7 +22,7 @@ export const Carousel:React.FC<carousel> = ({
   children,
   id = 'carousel',
   autoplay = false,
-  cards = 3,
+  cards = window.innerWidth > 900 ? 3 : 2,
   width = '1000px',
   interval = 2500,
   singleScroll = false,
@@ -56,24 +56,24 @@ export const Carousel:React.FC<carousel> = ({
       let timeoutId:number
 
       //let cardPerView:number = Math.round(carousel.offsetWidth / firstCardWidth)
-
+      
       carouselChildren.slice(-cards).reverse().forEach(card => {
         carousel.insertAdjacentHTML("afterbegin", card.outerHTML)
       })
-
+      
       carouselChildren.slice(0,cards).forEach(card => {
         carousel.insertAdjacentHTML("beforeend", card.outerHTML)
       })
-
+      
+      carousel.scrollLeft = carousel.offsetWidth
+      
       const firstCardWidth:number = carousel.querySelector(".card").offsetWidth
-
+      
       arrowBtns.forEach((btn:HTMLButtonElement) => (
         btn.addEventListener("click", () => {
-          carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth < 600 ? cards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth < 600 ? cards * firstCardWidth : firstCardWidth
+          carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth > 600 ? cards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth > 600 ? cards * firstCardWidth : firstCardWidth
         })
       ))
-
-      carousel.scrollLeft = carousel.offsetWidth
 
       const dragStart = (e:MouseEvent) => {
         isDragging = true
@@ -96,7 +96,7 @@ export const Carousel:React.FC<carousel> = ({
 
       const autoPlay = () => {
         if(window.innerWidth < 600) return
-        timeoutId = window.setTimeout(() => carousel.scrollLeft += firstCardWidth, interval)
+        timeoutId = window.setTimeout(() => carousel.scrollLeft += !singleScroll ? cards * firstCardWidth : firstCardWidth, interval)
       }
 
       const infiniteScroll = () => {
