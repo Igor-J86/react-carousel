@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
-import "../style/ijrc-carousel.css";
+import '../style/ijrc-carousel.css';
 
 export type carousel = {
   children: any
@@ -11,6 +11,9 @@ export type carousel = {
   interval?: number
   singleScroll?: boolean
   customClass?: string
+  scrollRightTitle?: string
+  scrollLeftTitle?: string
+  showButtons?: boolean
 }
 
 export type style = {
@@ -26,7 +29,10 @@ export const Carousel:React.FC<carousel> = ({
   width = '1000px',
   interval = 2500,
   singleScroll = false,
-  customClass
+  customClass,
+  scrollRightTitle = 'Scroll right',
+  scrollLeftTitle = 'Scroll left',
+  showButtons = true
 }) => {
 
   const carouselStyle:style = {
@@ -42,7 +48,7 @@ export const Carousel:React.FC<carousel> = ({
     const carousel:any = document.querySelector(`#${id}`)
     if(carousel) {
       const carouselWrapper:HTMLDivElement = carousel.parentElement
-      const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll(".carousel-arrow")
+      const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll('.carousel-arrow')
       
       const carouselChildren:Array<HTMLElement> = [...carousel.children]
       carouselChildren.forEach((card) => {
@@ -58,40 +64,40 @@ export const Carousel:React.FC<carousel> = ({
       //let cardPerView:number = Math.round(carousel.offsetWidth / firstCardWidth)
       
       carouselChildren.slice(-cards).reverse().forEach(card => {
-        carousel.insertAdjacentHTML("afterbegin", card.outerHTML)
+        carousel.insertAdjacentHTML('afterbegin', card.outerHTML)
       })
       
       carouselChildren.slice(0,cards).forEach(card => {
-        carousel.insertAdjacentHTML("beforeend", card.outerHTML)
+        carousel.insertAdjacentHTML('beforeend', card.outerHTML)
       })
       
       carousel.scrollLeft = carousel.offsetWidth
       
-      const firstCardWidth:number = carousel.querySelector(".card").offsetWidth
+      const firstCardWidth:number = carousel.querySelector('.card').offsetWidth
       
       arrowBtns.forEach((btn:HTMLButtonElement) => (
-        btn.addEventListener("click", () => {
+        btn.addEventListener('click', () => {
           carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth > 600 ? cards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth > 600 ? cards * firstCardWidth : firstCardWidth
         })
       ))
 
       const dragStart = (e:MouseEvent) => {
         isDragging = true
-        carousel.classList.add("dragging")
+        carousel.classList.add('dragging')
         startX = e.pageX
         startScrollLeft = carousel.scrollLeft
       }
 
       const dragging = (e:MouseEvent) => {
         if (!isDragging) return
-        carousel.classList.add("no-event")
+        carousel.classList.add('no-event')
         carousel.scrollLeft = startScrollLeft - (e.pageX - startX)
       }
 
       const dragStop = () => {
         isDragging = false
-        carousel.classList.remove("no-event")
-        carousel.classList.remove("dragging")
+        carousel.classList.remove('no-event')
+        carousel.classList.remove('dragging')
       }
 
       const autoPlay = () => {
@@ -101,13 +107,13 @@ export const Carousel:React.FC<carousel> = ({
 
       const infiniteScroll = () => {
         if(carousel.scrollLeft === 0) {
-          carousel.classList.add("no-transition")
+          carousel.classList.add('no-transition')
           carousel.scrollLeft = carousel.scrollWidth - (2 * carousel.offsetWidth)
-          carousel.classList.remove("no-transition")
+          carousel.classList.remove('no-transition')
         } else if(Math.ceil(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
-          carousel.classList.add("no-transition")
+          carousel.classList.add('no-transition')
           carousel.scrollLeft = carousel.offsetWidth
-          carousel.classList.remove("no-transition")
+          carousel.classList.remove('no-transition')
         }
 
         if(autoplay) {
@@ -118,28 +124,47 @@ export const Carousel:React.FC<carousel> = ({
         }
       }
 
-      carousel.addEventListener("mousedown", dragStart)
-      carousel.addEventListener("mousemove", dragging)
-      document.addEventListener("mouseup", dragStop)
-      carousel.addEventListener("scroll", infiniteScroll)
+      carousel.addEventListener('mousedown', dragStart)
+      carousel.addEventListener('mousemove', dragging)
+      document.addEventListener('mouseup', dragStop)
+      carousel.addEventListener('scroll', infiniteScroll)
       if(autoplay) {
-        carouselWrapper.addEventListener("mouseenter", () => clearTimeout(timeoutId))
-        carouselWrapper.addEventListener("mouseleave", autoPlay)
+        carouselWrapper.addEventListener('mouseenter', () => clearTimeout(timeoutId))
+        carouselWrapper.addEventListener('mouseleave', autoPlay)
       }
     }
   }, [])
 
   return (
-    <div className={`ijrc-carousel-wrapper${customClass && customClass.length > 0 ? ' ' + customClass : ''}`} style={carouselStyle.wrapper}>
-      <button className="carousel-arrow left" id={`${id}-carousel-left`}>
-        <ArrowLeft width={10} />
-      </button>
-      <div className="carousel" id={id && id.length > 0 ? id : 'carousel'} style={carouselStyle.carousel}>
+    <div
+      className={`ijrc-carousel-wrapper${customClass && customClass.length > 0 ? ' ' + customClass : ''}`}
+      style={carouselStyle.wrapper}
+    >
+      {showButtons &&
+        <button
+          className='carousel-arrow left'
+          id={`${id}-carousel-left`}
+          title={scrollLeftTitle}
+        >
+          <ArrowLeft width={10} />
+        </button>
+      }
+      <div
+        className='carousel'
+        id={id && id.length > 0 ? id : 'carousel'}
+        style={carouselStyle.carousel}
+      >
         {children}
       </div>
-      <button className="carousel-arrow right" id={`${id}-carousel-right`}>
-        <ArrowRight width={10} />
-      </button>
+      {showButtons &&
+        <button
+          className='carousel-arrow right'
+          id={`${id}-carousel-right`}
+          title={scrollRightTitle}
+        >
+          <ArrowRight width={10} />
+        </button>
+      }
     </div>
   )
 }
