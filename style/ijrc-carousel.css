@@ -94,6 +94,10 @@
       &:hover {
         background: var(--ijrc-light-bg);
       }
+
+      &.single-scroll {
+        scroll-snap-stop: always;
+      }
     }
 
   }

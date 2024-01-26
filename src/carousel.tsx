@@ -54,6 +54,7 @@ export const Carousel:React.FC<carousel> = ({
       carouselChildren.forEach((card) => {
         card.setAttribute('draggable', 'false')
         card.classList.add('card')
+        singleScroll && card.classList.add('single-scroll')
       })
 
       let isDragging:boolean = false
@@ -71,9 +72,13 @@ export const Carousel:React.FC<carousel> = ({
         carousel.insertAdjacentHTML('beforeend', card.outerHTML)
       })
       
-      carousel.scrollLeft = carousel.offsetWidth
-      
       const firstCardWidth:number = carousel.querySelector('.card').offsetWidth
+
+      if(window.innerWidth < 600) {
+        carousel.scrollLeft = carousel.offsetWidth + firstCardWidth
+      } else {
+        carousel.scrollLeft = carousel.offsetWidth
+      }
       
       arrowBtns.forEach((btn:HTMLButtonElement) => (
         btn.addEventListener('click', () => {
