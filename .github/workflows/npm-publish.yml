@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20.11.0
       - run: npm ci
-      - run: |
-          git config user.name "Igor-J86"
+      - run: git config user.name "Igor-J86"
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
