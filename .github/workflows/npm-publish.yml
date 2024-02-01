@@ -1,18 +1,25 @@
-name: Publish react-carousel package to npmjs
+name: Release and publish react-carousel
+
 on:
   push:
     branches:
       - main
+
 jobs:
   release:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 20.11.0
       - run: npm ci
-      - run: npm publish --access public
+      - run: npx semantic-release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
