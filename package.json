@@ -11,7 +11,7 @@
   "module": "./lib/esm/index.js",
   "main": "./lib/cjs/index.js",
   "files": [
-    "lib/"
+    "lib"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
