@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Igor-J86/react-carousel.git"
+    "url": "https://github.com/Igor-J86/react-carousel.git"
   },
   "author": "Igor",
   "license": "ISC",
