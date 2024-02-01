@@ -22,10 +22,7 @@
     "prepare": "npm run tsc",
     "start": "vite"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Igor-J86/react-carousel"
-  },
+  "repository": "https://github.com/Igor-J86/react-carousel",
   "author": "Igor",
   "license": "ISC",
   "bugs": {
