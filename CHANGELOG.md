@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/Igor-J86/react-carousel/compare/v1.0.5...v1.0.6) (2024-02-01)
+
+
+### Bug Fixes
+
+* add lib to gitignore ([df31c0b](https://github.com/Igor-J86/react-carousel/commit/df31c0b5fd9e6d904626d4904455c5b3e2b8c47c))
+
 ## [1.0.5](https://github.com/Igor-J86/react-carousel/compare/v1.0.4...v1.0.5) (2024-02-01)
 
 
