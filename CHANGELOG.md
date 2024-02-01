@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/Igor-J86/react-carousel/compare/v1.0.4...v1.0.5) (2024-02-01)
+
+
+### Bug Fixes
+
+* remove copy package ([439b463](https://github.com/Igor-J86/react-carousel/commit/439b463001a2e2616d86ec2e5efe994b3527562f))
+
 ## [1.0.4](https://github.com/Igor-J86/react-carousel/compare/v1.0.3...v1.0.4) (2024-02-01)
 
 
