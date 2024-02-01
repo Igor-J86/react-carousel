@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Igor-J86/react-carousel/compare/v1.0.0...v1.0.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* add lib to git ([0aed80b](https://github.com/Igor-J86/react-carousel/commit/0aed80b47bed5ffd3403431abdb58aa8fe7362b8))
+
 # 1.0.0 (2024-02-01)
 
 
