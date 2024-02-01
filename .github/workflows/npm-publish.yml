@@ -1,7 +1,7 @@
 name: Release and publish react-carousel
 
 on:
-  merge:
+  push:
     branches:
       - main
 
