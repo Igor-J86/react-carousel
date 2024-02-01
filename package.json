@@ -29,6 +29,10 @@
     "url": "https://github.com/Igor-J86/react-carousel/issues"
   },
   "homepage": "https://github.com/Igor-J86/react-carousel#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
