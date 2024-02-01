@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/Igor-J86/react-carousel/compare/v1.0.2...v1.0.3) (2024-02-01)
+
+
+### Bug Fixes
+
+* change token ([00a1370](https://github.com/Igor-J86/react-carousel/commit/00a137023a320c454382471be471f96d99752d43))
+* rename token ([4ff3c40](https://github.com/Igor-J86/react-carousel/commit/4ff3c40260ba62b24b93e879cd88fe12f4a4ee8d))
+* rename token ([c389759](https://github.com/Igor-J86/react-carousel/commit/c389759e0a5f4674bd2f94a0f612b615d43b17f7))
+
 ## [1.0.2](https://github.com/Igor-J86/react-carousel/compare/v1.0.1...v1.0.2) (2024-02-01)
 
 
