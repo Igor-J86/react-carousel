@@ -17,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf lib && rimraf static",
     "build": "vite build",
-    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 static/**/*.css lib/style",
+    "copy-files": "copyfiles -e src/**/*.ts -e src/**/*.tsx -u 1 static/**/*.css lib/style && copyfiles package.json lib",
     "tsc": "npm run clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && npm run build && npm run copy-files",
     "prepare": "npm run tsc",
     "start": "vite"
