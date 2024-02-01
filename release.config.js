@@ -7,7 +7,7 @@ const config = {
     [
       '@semantic-release/npm',
       {
-        "pkgRoot": "lib"
+        "pkgRoot": "lib/"
       }
     ],
     ['@semantic-release/git', {
