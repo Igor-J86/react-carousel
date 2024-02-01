@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 20.11.0
       - run: npm ci
+      - run: |
+          git config user.name "Igor-J86"
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
