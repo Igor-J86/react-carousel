@@ -1,6 +1,6 @@
 {
   "name": "@igor-j86/react-carousel",
-  "version": "1.0.6",
+  "version": "1.2.8",
   "description": "A responsive React carousel",
   "keywords": [
     "react",
@@ -34,7 +34,8 @@
   "homepage": "https://github.com/Igor-J86/react-carousel#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "latest"
+    "tag": "latest",
+    "access": "public"
   },
   "peerDependencies": {
     "react": "^18.2.0",
