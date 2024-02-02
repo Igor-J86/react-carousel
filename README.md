@@ -15,7 +15,7 @@ A responsive React carousel component, written in React with TypeScript.
 | scrollLeftTitle:string  | 'Scroll left'  |
 | showButtons:boolean     | true           |
 
-## Development tools
+## Developed with
 - React
 - TypeScript
 - Vite
