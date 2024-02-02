@@ -1,3 +1,11 @@
+## [1.2.12](https://github.com/Igor-J86/react-carousel/compare/v1.2.11...v1.2.12) (2024-02-02)
+
+
+### Bug Fixes
+
+* modify gitignore ([b1db532](https://github.com/Igor-J86/react-carousel/commit/b1db53277f91c132c79786e15fed7660444e417b))
+* update readme ([a21bbb4](https://github.com/Igor-J86/react-carousel/commit/a21bbb4ab4b460855ffa037d4dc44c3bfdd8e50d))
+
 ## [1.2.11](https://github.com/Igor-J86/react-carousel/compare/v1.2.10...v1.2.11) (2024-02-02)
 
 
