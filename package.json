@@ -1,7 +1,7 @@
 {
   "name": "@igor-j86/react-carousel",
   "version": "1.2.12",
-  "description": "A responsive React carousel",
+  "description": "A responsive React carousel, shipped as a package to npm",
   "keywords": [
     "react",
     "frontend",
