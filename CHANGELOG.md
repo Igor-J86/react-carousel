@@ -1,3 +1,10 @@
+## [1.2.9](https://github.com/Igor-J86/react-carousel/compare/v1.2.8...v1.2.9) (2024-02-02)
+
+
+### Bug Fixes
+
+* adjust files lib path ([06be03a](https://github.com/Igor-J86/react-carousel/commit/06be03aa7f6bbcfc163a9c73a9391a5a1b2a0b8a))
+
 ## [1.0.6](https://github.com/Igor-J86/react-carousel/compare/v1.0.5...v1.0.6) (2024-02-01)
 
 
