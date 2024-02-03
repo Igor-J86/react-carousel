@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/Igor-J86/react-carousel/compare/v1.2.12...v1.3.0) (2024-02-03)
+
+
+### Bug Fixes
+
+* Fix for smaller screens and infinite scroll ([a8b2bd2](https://github.com/Igor-J86/react-carousel/commit/a8b2bd2701b1742cd0d5087e724e7c79ed692575))
+
+
+### Features
+
+* Add props for arrow icon and autoplay mobile ([8f122b9](https://github.com/Igor-J86/react-carousel/commit/8f122b92099d72ee9822dd018b987d1be9417775))
+
 ## [1.2.12](https://github.com/Igor-J86/react-carousel/compare/v1.2.11...v1.2.12) (2024-02-02)
 
 
