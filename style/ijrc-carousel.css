@@ -29,10 +29,6 @@
     top: calc(50% - 10px);
     transform: translateY(calc(-50% + 5px));
 
-    & svg {
-      fill: var(--ijrc-white);
-    }
-
     &:active {
       background: var(--ijrc-light-blue);
     }

@@ -6,6 +6,7 @@ export type carousel = {
   children: any
   id?: string
   autoplay?: boolean
+  autoplayMobile?: boolean
   cards?: number
   width?: string
   interval?: number
@@ -14,6 +15,8 @@ export type carousel = {
   scrollRightTitle?: string
   scrollLeftTitle?: string
   showButtons?: boolean
+  arrowColor?: string
+  arrowWidth?: number
 }
 
 export type style = {
@@ -25,6 +28,7 @@ export const Carousel:React.FC<carousel> = ({
   children,
   id = 'carousel',
   autoplay = false,
+  autoplayMobile = false,
   cards = window.innerWidth > 900 ? 3 : 2,
   width = '1000px',
   interval = 2500,
@@ -32,7 +36,9 @@ export const Carousel:React.FC<carousel> = ({
   customClass,
   scrollRightTitle = 'Scroll right',
   scrollLeftTitle = 'Scroll left',
-  showButtons = true
+  showButtons = true,
+  arrowColor,
+  arrowWidth
 }) => {
 
   const carouselStyle:style = {
@@ -150,7 +156,7 @@ export const Carousel:React.FC<carousel> = ({
           id={`${id}-carousel-left`}
           title={scrollLeftTitle}
         >
-          <ArrowLeft width={10} />
+          <ArrowLeft width={arrowWidth} color={arrowColor} />
         </button>
       }
       <div
@@ -166,7 +172,7 @@ export const Carousel:React.FC<carousel> = ({
           id={`${id}-carousel-right`}
           title={scrollRightTitle}
         >
-          <ArrowRight width={10} />
+          <ArrowRight width={arrowWidth} color={arrowColor} />
         </button>
       }
     </div>
