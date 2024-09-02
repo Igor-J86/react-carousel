@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/Igor-J86/react-carousel/compare/v1.4.2...v1.4.3) (2024-09-02)
+
+
+### Bug Fixes
+
+* move window const outside useeffect ([05f3a1a](https://github.com/Igor-J86/react-carousel/commit/05f3a1a55578b90241d9fa86697b427743961695))
+
 ## [1.4.2](https://github.com/Igor-J86/react-carousel/compare/v1.4.1...v1.4.2) (2024-09-02)
 
 
