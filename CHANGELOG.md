@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Igor-J86/react-carousel/compare/v1.3.0...v1.4.0) (2024-09-02)
+
+
+### Features
+
+* make CSS optional by removing it as import ([39b2bca](https://github.com/Igor-J86/react-carousel/commit/39b2bcae165144ab990bf040e7cb82b59f3d722a))
+
 # [1.3.0](https://github.com/Igor-J86/react-carousel/compare/v1.2.12...v1.3.0) (2024-02-03)
 
 
