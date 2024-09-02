@@ -7,6 +7,9 @@ export default defineConfig({
     assetsDir: ".",
     emptyOutDir: false,
     rollupOptions: {
+      input: {
+        "ijrc-carousel": "./style/ijrc-carousel.css"
+      },
       output: {
         assetFileNames: 'ijrc-carousel[extname]'
       }
