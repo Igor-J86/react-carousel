@@ -1,11 +1,15 @@
 # react-carousel
 A responsive React carousel component, written in React with TypeScript.
 
+CSS note:
+The package comes with a CSS file, but you can choose to whether import it manually from the package or use your own.
+
 ## Usage
 ```jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "@igor-j86/react-carousel";
+import "../../node_modules/@igor-j86/react-carousel/lib/style/ijrc-carousel.css";
 
 const SomeComponent = () => {
   return (

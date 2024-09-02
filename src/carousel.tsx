@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
-import '../style/ijrc-carousel.css';
 
 export type carousel = {
   children: any
