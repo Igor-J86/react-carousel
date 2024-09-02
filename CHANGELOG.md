@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Igor-J86/react-carousel/compare/v1.4.0...v1.4.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* include the css during build ([1c22887](https://github.com/Igor-J86/react-carousel/commit/1c22887c948b7c90c93f3c8470841f4a5347b3a3))
+
 # [1.4.0](https://github.com/Igor-J86/react-carousel/compare/v1.3.0...v1.4.0) (2024-09-02)
 
 
