@@ -49,9 +49,9 @@ export const Carousel:React.FC<carousel> = ({
     }
   }
 
+  const isBrowser = !!window
   useEffect(() => {
     const carousel:any = document.querySelector(`#${id}`)
-    const isBrowser = !!window
     if(carousel && isBrowser) {
       const carouselWrapper:HTMLDivElement = carousel.parentElement
       const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll('.carousel-arrow')
@@ -143,7 +143,7 @@ export const Carousel:React.FC<carousel> = ({
         carouselWrapper.addEventListener('mouseleave', autoPlay)
       }
     }
-  }, [])
+  }, [isBrowser])
 
   return (
     <div
