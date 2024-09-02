@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Igor-J86/react-carousel/compare/v1.4.1...v1.4.2) (2024-09-02)
+
+
+### Bug Fixes
+
+* add window check ([2dd5e79](https://github.com/Igor-J86/react-carousel/commit/2dd5e79b5f5652e1adc31ca89063d6f9f6be95e5))
+
 ## [1.4.1](https://github.com/Igor-J86/react-carousel/compare/v1.4.0...v1.4.1) (2024-09-02)
 
 
