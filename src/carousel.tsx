@@ -51,7 +51,8 @@ export const Carousel:React.FC<carousel> = ({
 
   useEffect(() => {
     const carousel:any = document.querySelector(`#${id}`)
-    if(carousel) {
+    const isBrowser = !!window
+    if(carousel && isBrowser) {
       const carouselWrapper:HTMLDivElement = carousel.parentElement
       const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll('.carousel-arrow')
       const setCards = window.innerWidth > 600 ? cards : 2
