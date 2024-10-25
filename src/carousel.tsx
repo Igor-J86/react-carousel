@@ -120,7 +120,7 @@ export const Carousel:React.FC<carousel> = ({
           carousel.classList.add('no-transition')
           carousel.scrollLeft = window.innerWidth > 600 ? carousel.scrollWidth - (2 * carousel.offsetWidth) : carousel.scrollWidth - (2 * carousel.offsetWidth) * setCards
           carousel.classList.remove('no-transition')
-        } else if(Math.ceil(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
+        } else if(Math.round(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
           carousel.classList.add('no-transition')
           carousel.scrollLeft = window.innerWidth > 600 ? carousel.offsetWidth : carousel.offsetWidth + (2 * carousel.offsetWidth)
           carousel.classList.remove('no-transition')
