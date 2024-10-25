@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/Igor-J86/react-carousel/compare/v1.4.3...v1.4.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* replace math.ceil with math.round ([a239ae9](https://github.com/Igor-J86/react-carousel/commit/a239ae9dc6306ae3512f53a7f56e74ee3debf9ef))
+
 ## [1.4.3](https://github.com/Igor-J86/react-carousel/compare/v1.4.2...v1.4.3) (2024-09-02)
 
 
