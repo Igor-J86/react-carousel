@@ -28,7 +28,7 @@ export const Carousel:React.FC<carousel> = ({
   id = 'carousel',
   autoplay = false,
   autoplayMobile = false,
-  cards = window.innerWidth > 900 ? 3 : 2,
+  cards = typeof window !== "undefined" && window.innerWidth > 900 ? 3 : 2,
   width = '1000px',
   interval = 2500,
   singleScroll = false,
@@ -52,7 +52,7 @@ export const Carousel:React.FC<carousel> = ({
   }
 
   useEffect(() => {
-    if(carousel.current) {
+    if(typeof window !== "undefined" && carousel.current) {
       const carouselWrapper = carousel.current.parentElement
       const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow')
       const setCards = window.innerWidth > 600 ? cards : 2
