@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/Igor-J86/react-carousel/compare/v1.4.5...v1.5.0) (2025-03-09)
+
+
+### Features
+
+* refactor component to use useRef instead ([ce2cc87](https://github.com/Igor-J86/react-carousel/commit/ce2cc876886fd9e8966857234354cda27fa233f4))
+
 ## [1.4.5](https://github.com/Igor-J86/react-carousel/compare/v1.4.4...v1.4.5) (2025-03-09)
 
 
