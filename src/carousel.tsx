@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
 
 export type carousel = {
@@ -40,6 +40,8 @@ export const Carousel:React.FC<carousel> = ({
   arrowWidth
 }) => {
 
+  const carousel = useRef<HTMLDivElement>()
+
   const carouselStyle:style = {
     wrapper: {
       maxWidth: width
@@ -49,15 +51,13 @@ export const Carousel:React.FC<carousel> = ({
     }
   }
 
-  const isBrowser = !!window
   useEffect(() => {
-    const carousel:any = document.querySelector(`#${id}`)
-    if(carousel && isBrowser) {
-      const carouselWrapper:HTMLDivElement = carousel.parentElement
-      const arrowBtns:Array<HTMLButtonElement> = carousel.parentElement.querySelectorAll('.carousel-arrow')
+    if(carousel.current) {
+      const carouselWrapper = carousel.current.parentElement
+      const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow')
       const setCards = window.innerWidth > 600 ? cards : 2
       
-      const carouselChildren:Array<HTMLElement> = [...carousel.children]
+      const carouselChildren = Array.from(carousel.current?.children || [])
       carouselChildren.forEach((card) => {
         card.setAttribute('draggable', 'false')
         card.classList.add('card')
@@ -70,60 +70,61 @@ export const Carousel:React.FC<carousel> = ({
       let timeoutId:number
 
       carouselChildren.slice(-setCards).reverse().forEach(card => {
-        carousel.insertAdjacentHTML('afterbegin', card.outerHTML)
+        carousel.current.insertAdjacentHTML('afterbegin', card.outerHTML)
       })
       
       carouselChildren.slice(0,setCards).forEach(card => {
-        carousel.insertAdjacentHTML('beforeend', card.outerHTML)
+        carousel.current.insertAdjacentHTML('beforeend', card.outerHTML)
       })
       
-      const firstCardWidth:number = carousel.querySelector('.card').offsetWidth
+      const firstCard:HTMLDivElement = carousel.current.querySelector('.card')
+      const firstCardWidth:number = firstCard.offsetWidth
 
       if(window.innerWidth < 600) {
-        carousel.scrollLeft = carousel.offsetWidth + firstCardWidth
+        carousel.current.scrollLeft = carousel.current.offsetWidth + firstCardWidth
       } else {
-        carousel.scrollLeft = carousel.offsetWidth
+        carousel.current.scrollLeft = carousel.current.offsetWidth
       }
       
       arrowBtns.forEach((btn:HTMLButtonElement) => (
         btn.addEventListener('click', () => {
-          carousel.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth > 600 ? setCards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth > 600 ? setCards * firstCardWidth : firstCardWidth
+          carousel.current.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth > 600 ? setCards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth > 600 ? setCards * firstCardWidth : firstCardWidth
         })
       ))
 
       const dragStart = (e:MouseEvent) => {
         isDragging = true
-        carousel.classList.add('dragging')
+        carousel.current.classList.add('dragging')
         startX = e.pageX
-        startScrollLeft = carousel.scrollLeft
+        startScrollLeft = carousel.current.scrollLeft
       }
 
       const dragging = (e:MouseEvent) => {
         if (!isDragging) return
-        carousel.classList.add('no-event')
-        carousel.scrollLeft = startScrollLeft - (e.pageX - startX)
+        carousel.current.classList.add('no-event')
+        carousel.current.scrollLeft = startScrollLeft - (e.pageX - startX)
       }
 
       const dragStop = () => {
         isDragging = false
-        carousel.classList.remove('no-event')
-        carousel.classList.remove('dragging')
+        carousel.current.classList.remove('no-event')
+        carousel.current.classList.remove('dragging')
       }
 
       const autoPlay = () => {
         if(window.innerWidth < 600 && !autoplayMobile) return
-        timeoutId = window.setTimeout(() => carousel.scrollLeft += !singleScroll ? setCards * firstCardWidth : firstCardWidth, interval)
+        timeoutId = window.setTimeout(() => carousel.current.scrollLeft += !singleScroll ? setCards * firstCardWidth : firstCardWidth, interval)
       }
 
       const infiniteScroll = () => {
-        if(carousel.scrollLeft === 0) {
-          carousel.classList.add('no-transition')
-          carousel.scrollLeft = window.innerWidth > 600 ? carousel.scrollWidth - (2 * carousel.offsetWidth) : carousel.scrollWidth - (2 * carousel.offsetWidth) * setCards
-          carousel.classList.remove('no-transition')
-        } else if(Math.round(carousel.scrollLeft) === carousel.scrollWidth - carousel.offsetWidth) {
-          carousel.classList.add('no-transition')
-          carousel.scrollLeft = window.innerWidth > 600 ? carousel.offsetWidth : carousel.offsetWidth + (2 * carousel.offsetWidth)
-          carousel.classList.remove('no-transition')
+        if(carousel.current.scrollLeft === 0) {
+          carousel.current.classList.add('no-transition')
+          carousel.current.scrollLeft = window.innerWidth > 600 ? carousel.current.scrollWidth - (2 * carousel.current.offsetWidth) : carousel.current.scrollWidth - (2 * carousel.current.offsetWidth) * setCards
+          carousel.current.classList.remove('no-transition')
+        } else if(Math.round(carousel.current.scrollLeft) === carousel.current.scrollWidth - carousel.current.offsetWidth) {
+          carousel.current.classList.add('no-transition')
+          carousel.current.scrollLeft = window.innerWidth > 600 ? carousel.current.offsetWidth : carousel.current.offsetWidth + (2 * carousel.current.offsetWidth)
+          carousel.current.classList.remove('no-transition')
         }
 
         if(autoplay) {
@@ -134,16 +135,16 @@ export const Carousel:React.FC<carousel> = ({
         }
       }
 
-      carousel.addEventListener('mousedown', dragStart)
-      carousel.addEventListener('mousemove', dragging)
+      carousel.current.addEventListener('mousedown', dragStart)
+      carousel.current.addEventListener('mousemove', dragging)
       document.addEventListener('mouseup', dragStop)
-      carousel.addEventListener('scroll', infiniteScroll)
+      carousel.current.addEventListener('scroll', infiniteScroll)
       if(autoplay) {
         carouselWrapper.addEventListener('mouseenter', () => clearTimeout(timeoutId))
         carouselWrapper.addEventListener('mouseleave', autoPlay)
       }
     }
-  }, [isBrowser])
+  }, [carousel])
 
   return (
     <div
@@ -161,6 +162,7 @@ export const Carousel:React.FC<carousel> = ({
       }
       <div
         className='carousel'
+        ref={carousel}
         id={id && id.length > 0 ? id : 'carousel'}
         style={carouselStyle.carousel}
       >

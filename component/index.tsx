@@ -6,7 +6,7 @@ import "../static/ijrc-carousel.css";
 const root = createRoot(document.getElementById('carousel-root')!);
 
 root.render(
-  <Carousel autoplay>
+  <Carousel>
     <div>1</div>
     <div>2</div>
     <div>3</div>
