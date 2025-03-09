@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Igor-J86/react-carousel/compare/v1.5.0...v1.5.1) (2025-03-09)
+
+
+### Bug Fixes
+
+* add check for window !== undefined ([33c986d](https://github.com/Igor-J86/react-carousel/commit/33c986d4522c41ee140d737f316d9dfabfd6a42b))
+
 # [1.5.0](https://github.com/Igor-J86/react-carousel/compare/v1.4.5...v1.5.0) (2025-03-09)
 
 
