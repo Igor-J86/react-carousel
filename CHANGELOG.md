@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/Igor-J86/react-carousel/compare/v1.4.4...v1.4.5) (2025-03-09)
+
+
+### Bug Fixes
+
+* set peerDeps min versions allowed ([c9881cf](https://github.com/Igor-J86/react-carousel/commit/c9881cf8e07975f7283e6f7042b15e4a7f3496cd))
+
 ## [1.4.4](https://github.com/Igor-J86/react-carousel/compare/v1.4.3...v1.4.4) (2024-10-25)
 
 
