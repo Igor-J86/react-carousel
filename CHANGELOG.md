@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/Igor-J86/react-carousel/compare/v1.5.2...v1.5.3) (2025-07-10)
+
+
+### Bug Fixes
+
+* upgrade dependencies and set initial ref null ([f191499](https://github.com/Igor-J86/react-carousel/commit/f1914995a64062a0925a6552843e15d543c997a3))
+
 ## [1.5.2](https://github.com/Igor-J86/react-carousel/compare/v1.5.1...v1.5.2) (2025-03-09)
 
 
