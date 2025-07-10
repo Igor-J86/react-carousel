@@ -1,34 +1,34 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef, useState, Children } from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
 
 export type carousel = {
-  children: any
-  id?: string
-  autoplay?: boolean
-  autoplayMobile?: boolean
-  cards?: number
-  width?: string
-  interval?: number
-  singleScroll?: boolean
-  customClass?: string
-  scrollRightTitle?: string
-  scrollLeftTitle?: string
-  showButtons?: boolean
-  arrowColor?: string
-  arrowWidth?: number
-}
+  children: React.ReactNode;
+  id?: string;
+  autoplay?: boolean;
+  autoplayMobile?: boolean;
+  cards?: number;
+  width?: string;
+  interval?: number;
+  singleScroll?: boolean;
+  customClass?: string;
+  scrollRightTitle?: string;
+  scrollLeftTitle?: string;
+  showButtons?: boolean;
+  arrowColor?: string;
+  arrowWidth?: number;
+};
 
 export type style = {
-  wrapper:object
-  carousel:object
-}
+  wrapper: object;
+  carousel: object;
+};
 
 export const Carousel:React.FC<carousel> = ({
   children,
   id = 'carousel',
   autoplay = false,
   autoplayMobile = false,
-  cards = typeof window !== "undefined" && window.innerWidth > 900 ? 3 : 2,
+  cards:propCards = typeof window !== "undefined" && window.innerWidth > 900 ? 3 : window.innerWidth > 600 ? 2 : 1,
   width = '1000px',
   interval = 2500,
   singleScroll = false,
@@ -39,116 +39,164 @@ export const Carousel:React.FC<carousel> = ({
   arrowColor,
   arrowWidth
 }) => {
+  const carousel = useRef<HTMLDivElement>(null);
+  // State to make the component responsive
+  const [cards, setCards] = useState(propCards);
 
-  const carousel = useRef<HTMLDivElement>(null)
+  //This effect handles responsiveness
+  useEffect(() => {
+    const getCardCount = () => {
+      if (typeof window === 'undefined') return propCards;
+      // You can customize this logic as needed
+      return window.innerWidth > 900 ? propCards : window.innerWidth > 600 ? 2 : 1;
+    };
 
-  const carouselStyle:style = {
+    const handleResize = () => {
+      setCards(getCardCount());
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener('resize', handleResize);
+    // Cleanup the resize listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, [propCards]);
+
+  const carouselStyle: style = {
     wrapper: {
-      maxWidth: width
+      maxWidth: width,
     },
     carousel: {
-      gridAutoColumns: `calc((100% / ${cards}) - 12px)`
-    }
-  }
+      gridAutoColumns: `calc((100% / ${cards}) - 12px)`,
+    },
+  };
 
   useEffect(() => {
-    if(typeof window !== "undefined" && carousel.current) {
-      const carouselWrapper = carousel.current.parentElement
-      const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow')
-      const setCards = window.innerWidth > 600 ? cards : 2
-      
-      const carouselChildren = Array.from(carousel.current?.children || [])
-      carouselChildren.forEach((card) => {
-        card.setAttribute('draggable', 'false')
-        card.classList.add('card')
-        singleScroll && card.classList.add('single-scroll')
-      })
+    // Ensure we don't run this logic if the ref is not set
+    if (!carousel.current) return;
+    
+    const carouselEl = carousel.current;
+    const carouselWrapper = carouselEl.parentElement;
+    if (!carouselWrapper) return;
 
-      let isDragging:boolean = false
-      let startX:number
-      let startScrollLeft:number
-      let timeoutId:number
+    //  Use the children already rendered by React as the source of truth.
+    const originalChildrenHTML = Array.from(carouselEl.children).map(child => child.outerHTML);
+    if (originalChildrenHTML.length === 0) return;
 
-      carouselChildren.slice(-setCards).reverse().forEach(card => {
-        carousel.current.insertAdjacentHTML('afterbegin', card.outerHTML)
-      })
-      
-      carouselChildren.slice(0,setCards).forEach(card => {
-        carousel.current.insertAdjacentHTML('beforeend', card.outerHTML)
-      })
-      
-      const firstCard:HTMLDivElement = carousel.current.querySelector('.card')
-      const firstCardWidth:number = firstCard.offsetWidth
+    // Build the full carousel string with clones.
+    const clonesBefore = originalChildrenHTML.slice(-cards).join('');
+    const clonesAfter = originalChildrenHTML.slice(0, cards).join('');
+    
+    // Set the final HTML. This ensures we have a clean slate with all required cards.
+    carouselEl.innerHTML = clonesBefore + originalChildrenHTML.join('') + clonesAfter;
+    
+    // Now, proceed with the rest of your logic on the newly created DOM elements
+    const allCards = Array.from(carouselEl.children);
+    allCards.forEach((card) => {
+      card.setAttribute('draggable', 'false');
+      card.classList.add('card');
+      if (singleScroll) card.classList.add('single-scroll');
+    });
+    
+    const firstCard = carouselEl.querySelector('.card') as HTMLDivElement;
+    if (!firstCard) return;
 
-      if(window.innerWidth < 600) {
-        carousel.current.scrollLeft = carousel.current.offsetWidth + firstCardWidth
-      } else {
-        carousel.current.scrollLeft = carousel.current.offsetWidth
-      }
-      
-      arrowBtns.forEach((btn:HTMLButtonElement) => (
-        btn.addEventListener('click', () => {
-          carousel.current.scrollLeft += btn.id === `${id}-carousel-left` ? !singleScroll && window.innerWidth > 600 ? setCards * -firstCardWidth : -firstCardWidth : !singleScroll && window.innerWidth > 600 ? setCards * firstCardWidth : firstCardWidth
-        })
-      ))
+    const firstCardWidth = firstCard.offsetWidth;
+    carouselEl.scrollLeft = firstCardWidth * cards;
 
-      const dragStart = (e:MouseEvent) => {
-        isDragging = true
-        carousel.current.classList.add('dragging')
-        startX = e.pageX
-        startScrollLeft = carousel.current.scrollLeft
-      }
+    let isDragging = false;
+    let startX: number;
+    let startScrollLeft: number;
+    let timeoutId: number;
 
-      const dragging = (e:MouseEvent) => {
-        if (!isDragging) return
-        carousel.current.classList.add('no-event')
-        carousel.current.scrollLeft = startScrollLeft - (e.pageX - startX)
-      }
+    const dragStart = (e: MouseEvent) => {
+      isDragging = true;
+      carouselEl.classList.add('dragging');
+      startX = e.pageX;
+      startScrollLeft = carouselEl.scrollLeft;
+    };
 
-      const dragStop = () => {
-        isDragging = false
-        carousel.current.classList.remove('no-event')
-        carousel.current.classList.remove('dragging')
-      }
+    const dragging = (e: MouseEvent) => {
+      if (!isDragging) return;
+      carouselEl.classList.add('no-event');
+      carouselEl.scrollLeft = startScrollLeft - (e.pageX - startX);
+    };
 
-      const autoPlay = () => {
-        if(window.innerWidth < 600 && !autoplayMobile) return
-        timeoutId = window.setTimeout(() => carousel.current.scrollLeft += !singleScroll ? setCards * firstCardWidth : firstCardWidth, interval)
-      }
+    const dragStop = () => {
+      isDragging = false;
+      carouselEl.classList.remove('no-event');
+      carouselEl.classList.remove('dragging');
+    };
 
-      const infiniteScroll = () => {
-        if(carousel.current.scrollLeft === 0) {
-          carousel.current.classList.add('no-transition')
-          carousel.current.scrollLeft = window.innerWidth > 600 ? carousel.current.scrollWidth - (2 * carousel.current.offsetWidth) : carousel.current.scrollWidth - (2 * carousel.current.offsetWidth) * setCards
-          carousel.current.classList.remove('no-transition')
-        } else if(Math.round(carousel.current.scrollLeft) === carousel.current.scrollWidth - carousel.current.offsetWidth) {
-          carousel.current.classList.add('no-transition')
-          carousel.current.scrollLeft = window.innerWidth > 600 ? carousel.current.offsetWidth : carousel.current.offsetWidth + (2 * carousel.current.offsetWidth)
-          carousel.current.classList.remove('no-transition')
-        }
+    const autoPlay = () => {
+      if (window.innerWidth < 600 && !autoplayMobile) return;
+      const scrollBy = singleScroll ? firstCardWidth : cards * firstCardWidth;
+      timeoutId = window.setTimeout(() => carouselEl.scrollLeft += scrollBy, interval);
+    };
 
-        if(autoplay) {
-          clearTimeout(timeoutId)
-          if(!carouselWrapper.matches(':hover')) {
-            autoPlay()
-          }
-        }
+    const totalCards = originalChildrenHTML.length;
+
+    const infiniteScroll = () => {
+      if(carouselEl.scrollLeft === 0) {
+        carouselEl.classList.add('no-transition')
+        carouselEl.scrollLeft = firstCardWidth * totalCards
+        carouselEl.classList.remove('no-transition')
+      } else if(carouselEl.scrollLeft >= firstCardWidth * (totalCards + cards - 0.5)) {
+        carouselEl.classList.add('no-transition')
+        carouselEl.scrollLeft = firstCardWidth * cards
+        carouselEl.classList.remove('no-transition')
       }
 
-      carousel.current.addEventListener('mousedown', dragStart)
-      carousel.current.addEventListener('mousemove', dragging)
-      document.addEventListener('mouseup', dragStop)
-      carousel.current.addEventListener('scroll', infiniteScroll)
       if(autoplay) {
-        carouselWrapper.addEventListener('mouseenter', () => clearTimeout(timeoutId))
-        carouselWrapper.addEventListener('mouseleave', autoPlay)
+        clearTimeout(timeoutId)
+        if(!carouselWrapper.matches(':hover')) {
+          autoPlay()
+        }
       }
     }
-  }, [carousel])
+
+
+    const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow');
+    const handleArrowClick = (e: Event) => {
+      const btn = e.currentTarget as HTMLButtonElement;
+      const scrollBy = singleScroll ? firstCardWidth : cards * firstCardWidth;
+      carouselEl.scrollLeft += btn.id.includes('-left') ? -scrollBy : scrollBy;
+    };
+    
+    arrowBtns.forEach(btn => btn.addEventListener('click', handleArrowClick));
+    
+    carouselEl.addEventListener('mousedown', dragStart);
+    carouselEl.addEventListener('mousemove', dragging);
+    document.addEventListener('mouseup', dragStop);
+    carouselEl.addEventListener('scroll', infiniteScroll);
+
+    const handleMouseEnter = () => clearTimeout(timeoutId);
+    const handleMouseLeave = () => autoPlay();
+
+    if (autoplay) {
+      carouselWrapper.addEventListener('mouseenter', handleMouseEnter);
+      carouselWrapper.addEventListener('mouseleave', handleMouseLeave);
+      autoPlay();
+    }
+
+    // The cleanup function to prevent memory leaks
+    return () => {
+      clearTimeout(timeoutId);
+      arrowBtns.forEach(btn => btn.removeEventListener('click', handleArrowClick));
+      carouselEl.removeEventListener('mousedown', dragStart);
+      carouselEl.removeEventListener('mousemove', dragging);
+      document.removeEventListener('mouseup', dragStop);
+      carouselEl.removeEventListener('scroll', infiniteScroll);
+      if (autoplay && carouselWrapper) {
+          carouselWrapper.removeEventListener('mouseenter', handleMouseEnter);
+          carouselWrapper.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+    
+  }, [children, cards, autoplay, autoplayMobile, singleScroll, interval, id]);
 
   return (
     <div
-      className={`ijrc-carousel-wrapper${customClass && customClass.length > 0 ? ' ' + customClass : ''}`}
+      className={`ijrc-carousel-wrapper${customClass ? ' ' + customClass : ''}`}
       style={carouselStyle.wrapper}
     >
       {showButtons &&
@@ -163,7 +211,8 @@ export const Carousel:React.FC<carousel> = ({
       <div
         className='carousel'
         ref={carousel}
-        id={id && id.length > 0 ? id : 'carousel'}
+        id={id}
+        key={Children.count(children)}
         style={carouselStyle.carousel}
       >
         {children}
@@ -178,5 +227,5 @@ export const Carousel:React.FC<carousel> = ({
         </button>
       }
     </div>
-  )
-}
+  );
+};
