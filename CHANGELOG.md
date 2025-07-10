@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Igor-J86/react-carousel/compare/v1.5.3...v1.6.0) (2025-07-10)
+
+
+### Features
+
+* Improve overall code quality ([d5c8929](https://github.com/Igor-J86/react-carousel/commit/d5c892968567741bd7fb36eb039406e5dfda09ef))
+
 ## [1.5.3](https://github.com/Igor-J86/react-carousel/compare/v1.5.2...v1.5.3) (2025-07-10)
 
 
