@@ -40,7 +40,7 @@ export const Carousel:React.FC<carousel> = ({
   arrowWidth
 }) => {
 
-  const carousel = useRef<HTMLDivElement>()
+  const carousel = useRef<HTMLDivElement>(null)
 
   const carouselStyle:style = {
     wrapper: {
