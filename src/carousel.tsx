@@ -31,7 +31,6 @@ export const Carousel:React.FC<carousel> = ({
   cards:propCards = typeof window !== "undefined" && window.innerWidth > 900 ? 3 : window.innerWidth > 600 ? 2 : 1,
   width = '1000px',
   interval = 2500,
-  singleScroll = false,
   customClass,
   scrollRightTitle = 'Scroll right',
   scrollLeftTitle = 'Scroll left',
@@ -94,7 +93,7 @@ export const Carousel:React.FC<carousel> = ({
     allCards.forEach((card) => {
       card.setAttribute('draggable', 'false');
       card.classList.add('card');
-      if (singleScroll) card.classList.add('single-scroll');
+      card.classList.add('single-scroll');
     });
     
     const firstCard = carouselEl.querySelector('.card') as HTMLDivElement;
@@ -129,8 +128,7 @@ export const Carousel:React.FC<carousel> = ({
 
     const autoPlay = () => {
       if (window.innerWidth < 600 && !autoplayMobile) return;
-      const scrollBy = singleScroll ? firstCardWidth : cards * firstCardWidth;
-      timeoutId = window.setTimeout(() => carouselEl.scrollLeft += scrollBy, interval);
+      timeoutId = window.setTimeout(() => carouselEl.scrollLeft += firstCardWidth, interval);
     };
 
     const totalCards = originalChildrenHTML.length;
@@ -158,8 +156,7 @@ export const Carousel:React.FC<carousel> = ({
     const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow');
     const handleArrowClick = (e: Event) => {
       const btn = e.currentTarget as HTMLButtonElement;
-      const scrollBy = singleScroll ? firstCardWidth : cards * firstCardWidth;
-      carouselEl.scrollLeft += btn.id.includes('-left') ? -scrollBy : scrollBy;
+      carouselEl.scrollLeft += btn.id.includes('-left') ? -firstCardWidth : firstCardWidth;
     };
     
     arrowBtns.forEach(btn => btn.addEventListener('click', handleArrowClick));
@@ -192,7 +189,7 @@ export const Carousel:React.FC<carousel> = ({
       }
     };
     
-  }, [children, cards, autoplay, autoplayMobile, singleScroll, interval, id]);
+  }, [children, cards, autoplay, autoplayMobile, interval, id]);
 
   return (
     <div
