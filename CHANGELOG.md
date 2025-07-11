@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Igor-J86/react-carousel/compare/v1.6.1...v1.7.0) (2025-07-11)
+
+
+### Features
+
+* refactor and remove buggy infinitescroll ([f1b54cb](https://github.com/Igor-J86/react-carousel/commit/f1b54cb8e9cd3cbf8081c88e08b27381a3ba2a91))
+
 ## [1.6.1](https://github.com/Igor-J86/react-carousel/compare/v1.6.0...v1.6.1) (2025-07-11)
 
 
