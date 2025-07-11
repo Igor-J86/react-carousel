@@ -16,7 +16,7 @@
 
   & > div {
     position: relative;
-    
+
     & .carousel-arrow {
       position: absolute;
       background: var(--ijrc-blue);
@@ -107,11 +107,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-    & .dot {
+    & li .dot {
       background: var(--ijrc-gray);
       border: 1px solid var(--ijrc-darker-gray);
+      -webkit-appearance: none;
+      appearance: none;
       width: 1rem;
       height: 1rem;
       border-radius: 50%;
@@ -119,6 +124,9 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      max-height: unset;
+      min-width: unset;
+      padding: 0;
       &.active::before {
         content: '';
         background: var(--ijrc-blue);
