@@ -4,6 +4,8 @@
   --ijrc-light-blue: hsl(247, 70%, 50%);
   --ijrc-white: hsl(0, 0%, 99%);
   --ijrc-drop-shadow: hsla(0, 0%, 85%, 0.7);
+  --ijrc-gray: hsl(0, 0%, 90%);
+  --ijrc-darker-gray: hsl(0, 0%, 80%);
 }
 
 .ijrc-carousel-wrapper {
@@ -12,90 +14,120 @@
   position: relative;
   margin: auto;
 
-  & .carousel-arrow {
-    position: absolute;
-    background: var(--ijrc-blue);
-    box-shadow: 0 3px 6px var(--ijrc-drop-shadow);
-    border: none;
-    width: 3rem;
-    height: 3rem;
-    max-height: unset;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    margin: 0;
-    padding: 0;
-    top: calc(50% - 10px);
-    transform: translateY(calc(-50% + 5px));
+  & > div {
+    position: relative;
+    
+    & .carousel-arrow {
+      position: absolute;
+      background: var(--ijrc-blue);
+      box-shadow: 0 3px 6px var(--ijrc-drop-shadow);
+      border: none;
+      width: 3rem;
+      height: 3rem;
+      max-height: unset;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      margin: 0;
+      padding: 0;
+      top: calc(50% - 10px);
+      transform: translateY(calc(-50% + 5px));
 
-    &:active {
-      background: var(--ijrc-light-blue);
+      &:active {
+        background: var(--ijrc-light-blue);
+      }
+
+      &.left {
+        left: -1.5rem;
+      }
+
+      &.right {
+        right: -1.5rem;
+      }
     }
 
-    &.left {
-      left: -1.5rem;
-    }
+    & .carousel {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: calc((100% / 3) - 12px);
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
 
-    &.right {
-      right: -1.5rem;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &.dragging {
+        scroll-snap-type: none;
+        scroll-behavior: auto;
+      }
+
+      &.dragging .card {
+        cursor: grab;
+        user-select: none;
+      }
+
+      &.no-event .card {
+        pointer-events: none;
+      }
+
+      &.no-transition {
+        scroll-behavior: auto;
+      }
+
+      & .card {
+        background: var(--ijrc-white);
+        border-radius: 3px;
+        min-height: 4rem;
+        box-shadow: 0 2px 2px var(--ijrc-drop-shadow);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 7px;
+        scroll-snap-align: start;
+
+        &:hover {
+          background: var(--ijrc-light-bg);
+        }
+
+        &.single-scroll {
+          scroll-snap-stop: always;
+        }
+      }
     }
   }
 
-  & .carousel {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc((100% / 3) - 12px);
-    gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
+  & .dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    &.dragging {
-      scroll-snap-type: none;
-      scroll-behavior: auto;
-    }
-
-    &.dragging .card {
-      cursor: grab;
-      user-select: none;
-    }
-
-    &.no-event .card {
-      pointer-events: none;
-    }
-
-    &.no-transition {
-      scroll-behavior: auto;
-    }
-
-    & .card {
-      background: var(--ijrc-white);
-      border-radius: 3px;
-      min-height: 4rem;
-      box-shadow: 0 2px 2px var(--ijrc-drop-shadow);
+    & .dot {
+      background: var(--ijrc-gray);
+      border: 1px solid var(--ijrc-darker-gray);
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      padding: 7px;
-      scroll-snap-align: start;
-
-      &:hover {
-        background: var(--ijrc-light-bg);
-      }
-
-      &.single-scroll {
-        scroll-snap-stop: always;
+      align-items: center;
+      position: relative;
+      &.active::before {
+        content: '';
+        background: var(--ijrc-blue);
+        width: 0.8rem;
+        height: 0.8rem;
+        position: absolute;
+        border-radius: 50%;
       }
     }
-
   }
 }
 
