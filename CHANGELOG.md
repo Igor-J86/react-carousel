@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Igor-J86/react-carousel/compare/v1.7.0...v1.7.1) (2025-07-11)
+
+
+### Bug Fixes
+
+* fix css + add aria label ([4b5abe4](https://github.com/Igor-J86/react-carousel/commit/4b5abe4d13be1cf8f620c18bf35963df88fe9142))
+
 # [1.7.0](https://github.com/Igor-J86/react-carousel/compare/v1.6.1...v1.7.0) (2025-07-11)
 
 
