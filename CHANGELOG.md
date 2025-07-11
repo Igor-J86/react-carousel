@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Igor-J86/react-carousel/compare/v1.6.0...v1.6.1) (2025-07-11)
+
+
+### Bug Fixes
+
+* make only single scroll possible ([6cbedc0](https://github.com/Igor-J86/react-carousel/commit/6cbedc0ce6d38802d7f2fa583a5b6608f0b3f2f6))
+
 # [1.6.0](https://github.com/Igor-J86/react-carousel/compare/v1.5.3...v1.6.0) (2025-07-10)
 
 
