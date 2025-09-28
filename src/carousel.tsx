@@ -182,7 +182,6 @@ export const Carousel:React.FC<Carousel> = ({
           {[...Array(Children.toArray(children).length - cards + 1)].map((_, i) => (
             <li>
               <button
-                key={i}
                 aria-label={`${i + 1} of ${Children.toArray(children).length - cards + 1}`}
                 className={`dot${i === activeDot ? ' active' : ''}`}
                 onClick={() => setActiveDot(i)}
