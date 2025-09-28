@@ -1,8 +1,8 @@
-import {createRoot} from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import { Carousel } from "../src/carousel";
 import "../static/ijrc-carousel.css";
 
-const root = createRoot(document.getElementById('carousel-root')!);
+const root = ReactDOM.createRoot(document.getElementById('carousel-root') as HTMLElement);
 
 root.render(
   <Carousel>

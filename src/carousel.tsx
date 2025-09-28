@@ -131,16 +131,16 @@ export const Carousel:React.FC<Carousel> = ({
     
     arrowBtns.forEach(btn => btn.addEventListener('click', handleArrowClick));
     
-    carouselEl.addEventListener('mousedown', dragStart);
-    carouselEl.addEventListener('mousemove', dragging);
-    document.addEventListener('mouseup', dragStop);
+    carouselEl.addEventListener('pointerdown', dragStart);
+    carouselEl.addEventListener('pointermove', dragging);
+    document.addEventListener('pointerup', dragStop);
 
     return () => {
       clearTimeout(timeoutId);
       arrowBtns.forEach(btn => btn.removeEventListener('click', handleArrowClick));
-      carouselEl.removeEventListener('mousedown', dragStart);
-      carouselEl.removeEventListener('mousemove', dragging);
-      document.removeEventListener('mouseup', dragStop);
+      carouselEl.removeEventListener('pointerdown', dragStart);
+      carouselEl.removeEventListener('pointermove', dragging);
+      document.removeEventListener('pointerup', dragStop);
     };
   }, [children, cards, interval, id, showDots, activeDot]);
 
