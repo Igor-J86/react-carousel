@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/Igor-J86/react-carousel/compare/v1.7.1...v1.7.2) (2025-09-28)
+
+
+### Bug Fixes
+
+* change mouse events to pointer events ([384e809](https://github.com/Igor-J86/react-carousel/commit/384e80963a3db618ff98cb743d907ec62967f7ed))
+
 ## [1.7.1](https://github.com/Igor-J86/react-carousel/compare/v1.7.0...v1.7.1) (2025-07-11)
 
 
