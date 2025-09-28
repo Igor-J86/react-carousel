@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/Igor-J86/react-carousel/compare/v1.7.2...v1.7.3) (2025-09-28)
+
+
+### Bug Fixes
+
+* add key prop to list items ([f8381bd](https://github.com/Igor-J86/react-carousel/commit/f8381bd3ac6828469da2ac4f790fbf044f5c1d05))
+
 ## [1.7.2](https://github.com/Igor-J86/react-carousel/compare/v1.7.1...v1.7.2) (2025-09-28)
 
 
