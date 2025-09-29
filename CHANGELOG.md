@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/Igor-J86/react-carousel/compare/v1.8.3...v1.8.4) (2025-09-29)
+
+
+### Bug Fixes
+
+* make scroll snap mandatory in css ([e78865a](https://github.com/Igor-J86/react-carousel/commit/e78865a17ff0a6f25ee984d8c41876853fcebfa3))
+
 ## [1.8.3](https://github.com/Igor-J86/react-carousel/compare/v1.8.2...v1.8.3) (2025-09-29)
 
 
