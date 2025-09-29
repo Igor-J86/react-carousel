@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/Igor-J86/react-carousel/compare/v1.8.0...v1.8.1) (2025-09-29)
+
+
+### Bug Fixes
+
+* add webkit touch for scrolling in css ([2d8a660](https://github.com/Igor-J86/react-carousel/commit/2d8a660eb1d6e45bf919a95aca89ad9681c058f2))
+
 # [1.8.0](https://github.com/Igor-J86/react-carousel/compare/v1.7.4...v1.8.0) (2025-09-29)
 
 
