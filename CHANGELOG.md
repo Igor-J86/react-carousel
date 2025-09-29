@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/Igor-J86/react-carousel/compare/v1.8.1...v1.8.2) (2025-09-29)
+
+
+### Bug Fixes
+
+* revert webkit touch css ([dc3dd48](https://github.com/Igor-J86/react-carousel/commit/dc3dd482ec4c6e35ce9aa9b4b2e5161954641cad))
+
 ## [1.8.1](https://github.com/Igor-J86/react-carousel/compare/v1.8.0...v1.8.1) (2025-09-29)
 
 
