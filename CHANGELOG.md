@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Igor-J86/react-carousel/compare/v1.7.4...v1.8.0) (2025-09-29)
+
+
+### Features
+
+* remove event listeners in useEffect ([2ab14a7](https://github.com/Igor-J86/react-carousel/commit/2ab14a7c45f18476309c96c64c9a611f85e62f79))
+
 ## [1.7.4](https://github.com/Igor-J86/react-carousel/compare/v1.7.3...v1.7.4) (2025-09-28)
 
 
