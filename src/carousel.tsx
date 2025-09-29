@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Children } from 'react';
+import React, { useEffect, useRef, useState, Children, act } from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
 
 export type Carousel = {
@@ -38,6 +38,7 @@ export const Carousel:React.FC<Carousel> = ({
   const carousel = useRef<HTMLDivElement>(null);
   const [cards, setCards] = useState(propCards);
   const [activeDot, setActiveDot] = useState(0)
+  const [scrolling, setScrolling] = useState(false);
 
   useEffect(() => {
     const getCardCount = () => {
@@ -69,8 +70,6 @@ export const Carousel:React.FC<Carousel> = ({
     if (!carousel.current) return;
     
     const carouselEl = carousel.current;
-    const carouselWrapper = carouselEl.parentElement;
-    if (!carouselWrapper) return;
 
     const allCards = Array.from(carouselEl.children);
     allCards.forEach((card) => {
@@ -85,65 +84,56 @@ export const Carousel:React.FC<Carousel> = ({
     const firstCardWidth = firstCard.offsetWidth;
 
     if(showDots) {
-      carouselEl.scrollLeft = firstCardWidth * activeDot
+      const idx = Math.round(carouselEl.scrollLeft / firstCardWidth);
+      if(idx !== activeDot && scrolling) {
+        carouselEl.scrollLeft = firstCardWidth * activeDot
+        setScrolling(false);
+      }
     }
+  }, [cards, activeDot, showDots, scrolling]);
 
-    let isDragging = false;
-    let startX: number;
-    let startScrollLeft: number;
-    let timeoutId: number;
+  let isDragging = false;
+  let startX: number;
+  let startScrollLeft: number;
 
-    const dragStart = (e: MouseEvent) => {
-      isDragging = true;
-      carouselEl.classList.add('dragging');
-      startX = e.pageX;
-      startScrollLeft = carouselEl.scrollLeft;
-    };
+  const dragStart = (e: React.PointerEvent<HTMLDivElement>) => {
+    isDragging = true;
+    carousel.current.classList.add('dragging');
+    startX = e.pageX;
+    startScrollLeft = carousel.current.scrollLeft;
+  };
 
-    const dragging = (e: MouseEvent) => {
-      if (!isDragging) return;
-      carouselEl.classList.add('no-event');
-      carouselEl.scrollLeft = startScrollLeft - (e.pageX - startX);
-    };
+  const dragging = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    carousel.current.classList.add('no-event');
+    carousel.current.scrollLeft = startScrollLeft - (e.pageX - startX);
+  };
 
-    const dragStop = () => {
-      isDragging = false;
-      carouselEl.classList.remove('no-event');
-      carouselEl.classList.remove('dragging');
+  const dragStop = () => {
+    isDragging = false;
+    carousel.current.classList.remove('no-event');
+    carousel.current.classList.remove('dragging');
 
-      const newActiveDot = Math.round(carouselEl.scrollLeft / (carouselEl.offsetWidth / cards))
-      setActiveDot(newActiveDot)
-    };
+    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
 
-    const arrowBtns = carouselWrapper.querySelectorAll('.carousel-arrow');
-    const handleArrowClick = (e: Event) => {
-      const btn = e.currentTarget as HTMLButtonElement;
-      carouselEl.scrollLeft += btn.id.includes('-left') ? -firstCardWidth : firstCardWidth;
+    const newActiveDot = Math.round(carousel.current.scrollLeft / firstCardWidth);
+    setActiveDot(newActiveDot)
+  };
 
-      showDots && setActiveDot((prevDot) => (
-        btn.id.includes('-left') && prevDot > 0
-          ? prevDot - 1
-          : btn.id.includes('-right') && Children.toArray(children).length - cards > prevDot
-            ? prevDot + 1
-            : prevDot
-      ));
-    };
-    
-    arrowBtns.forEach(btn => btn.addEventListener('click', handleArrowClick));
-    
-    carouselEl.addEventListener('pointerdown', dragStart);
-    carouselEl.addEventListener('pointermove', dragging);
-    document.addEventListener('pointerup', dragStop);
+  const handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
+    carousel.current.scrollLeft += btn.id.includes('-left') ? -firstCardWidth : firstCardWidth;
+  };
 
-    return () => {
-      clearTimeout(timeoutId);
-      arrowBtns.forEach(btn => btn.removeEventListener('click', handleArrowClick));
-      carouselEl.removeEventListener('pointerdown', dragStart);
-      carouselEl.removeEventListener('pointermove', dragging);
-      document.removeEventListener('pointerup', dragStop);
-    };
-  }, [children, cards, interval, id, showDots, activeDot]);
-
+  const handleScroll = () => {
+    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
+    const idx = Math.round(carousel.current.scrollLeft / firstCardWidth);
+    if(idx !== activeDot && !isDragging) {
+      setActiveDot(idx);
+    }
+  };
+  
   return (
     <div
       className={`ijrc-carousel-wrapper${customClass ? ' ' + customClass : ''}`}
@@ -155,6 +145,7 @@ export const Carousel:React.FC<Carousel> = ({
             className='carousel-arrow left'
             id={`${id}-carousel-left`}
             title={scrollLeftTitle}
+            onClick={handleArrowClick}
           >
             <ArrowLeft width={arrowWidth} color={arrowColor} />
           </button>
@@ -164,6 +155,10 @@ export const Carousel:React.FC<Carousel> = ({
           ref={carousel}
           id={id}
           style={carouselStyle.carousel}
+          onPointerDown={dragStart}
+          onPointerMove={dragging}
+          onPointerUp={dragStop}
+          onScroll={handleScroll}
         >
           {children}
         </div>
@@ -172,6 +167,7 @@ export const Carousel:React.FC<Carousel> = ({
             className='carousel-arrow right'
             id={`${id}-carousel-right`}
             title={scrollRightTitle}
+            onClick={handleArrowClick}
           >
             <ArrowRight width={arrowWidth} color={arrowColor} />
           </button>
@@ -184,7 +180,7 @@ export const Carousel:React.FC<Carousel> = ({
               <button
                 aria-label={`${i + 1} of ${Children.toArray(children).length - cards + 1}`}
                 className={`dot${i === activeDot ? ' active' : ''}`}
-                onClick={() => setActiveDot(i)}
+                onClick={() => {setActiveDot(i); setScrolling(i !== activeDot);}}
               />
             </li>
           ))}
