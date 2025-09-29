@@ -88,6 +88,7 @@ export const Carousel:React.FC<Carousel> = ({
       if(idx !== activeDot && scrolling) {
         carouselEl.scrollLeft = firstCardWidth * activeDot
         setScrolling(false);
+        setActiveDot(idx);
       }
     }
   }, [cards, activeDot, showDots, scrolling]);
@@ -129,7 +130,7 @@ export const Carousel:React.FC<Carousel> = ({
   const handleScroll = () => {
     const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
     const idx = Math.round(carousel.current.scrollLeft / firstCardWidth);
-    if(idx !== activeDot && !isDragging) {
+    if(idx !== activeDot && !isDragging && !scrolling) {
       setActiveDot(idx);
     }
   };
@@ -180,7 +181,7 @@ export const Carousel:React.FC<Carousel> = ({
               <button
                 aria-label={`${i + 1} of ${Children.toArray(children).length - cards + 1}`}
                 className={`dot${i === activeDot ? ' active' : ''}`}
-                onClick={() => {setActiveDot(i); setScrolling(i !== activeDot);}}
+                onPointerUp={() => {setActiveDot(i); setScrolling(i !== activeDot);}}
               />
             </li>
           ))}
