@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/Igor-J86/react-carousel/compare/v1.8.2...v1.8.3) (2025-09-29)
+
+
+### Bug Fixes
+
+* change to onPointerUp event for dots ([8dcb088](https://github.com/Igor-J86/react-carousel/commit/8dcb088532f73c6760913d1a358265ad982bf233))
+
 ## [1.8.2](https://github.com/Igor-J86/react-carousel/compare/v1.8.1...v1.8.2) (2025-09-29)
 
 
