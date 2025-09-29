@@ -57,6 +57,7 @@
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
 
       &::-webkit-scrollbar {
         display: none;
