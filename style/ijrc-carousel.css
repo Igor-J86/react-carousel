@@ -137,6 +137,7 @@
         border-radius: 3px;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         position: relative;
         max-height: unset;
         min-width: unset;
