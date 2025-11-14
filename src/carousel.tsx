@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, Children, act } from 'react';
+import React, { useEffect, useRef, useState, Children, act, ReactElement } from 'react';
 import { ArrowLeft, ArrowRight } from './icons';
 
 export type Carousel = {
@@ -14,6 +14,8 @@ export type Carousel = {
   arrowColor?: string;
   arrowWidth?: number;
   showDots?: boolean;
+  startAt?: number;
+  bigThumbs?: boolean;
 };
 
 export type Style = {
@@ -33,16 +35,18 @@ export const Carousel:React.FC<Carousel> = ({
   showButtons = true,
   showDots = true,
   arrowColor,
-  arrowWidth
+  arrowWidth,
+  bigThumbs = false,
 }) => {
   const carousel = useRef<HTMLDivElement>(null);
   const [cards, setCards] = useState(propCards);
   const [activeDot, setActiveDot] = useState(0)
-  const [scrolling, setScrolling] = useState(false);
+  const [thumbs, setThumbs] = useState<string[]>([]);
+  const [titles, setTitles] = useState<string[]>([]);
 
   useEffect(() => {
     const getCardCount = () => {
-      if (window === undefined) return propCards;
+      if (window === undefined || bigThumbs) return propCards;
       // You can customize this logic as needed
       return window.innerWidth > 900 ? propCards : window.innerWidth > 600 ? 2 : 1;
     };
@@ -55,14 +59,14 @@ export const Carousel:React.FC<Carousel> = ({
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [propCards]);
+  }, [propCards, bigThumbs]);
 
   const carouselStyle:Style = {
     wrapper: {
       maxWidth: width,
     },
     carousel: {
-      gridAutoColumns: `calc((100% / ${cards}) - 12px)`,
+      gridAutoColumns: `calc((100% / ${bigThumbs ? 1 : cards}) - 12px)`,
     },
   };
 
@@ -76,6 +80,15 @@ export const Carousel:React.FC<Carousel> = ({
       card.setAttribute('draggable', 'false');
       card.classList.add('card');
       card.classList.add('single-scroll');
+      const hasTitle = Array.from(card.children).find((c) => c.localName === 'h1' || c.localName === 'h2');
+      if (hasTitle) {
+        card.setAttribute('data-title', hasTitle.textContent)
+      }
+      const hasImage = Array.from(card.children).find((c) => c.localName === 'img');
+      if (hasImage) {
+        hasImage.setAttribute('draggable', 'false');
+        card.setAttribute('data-img-thumb', hasImage.getAttribute('src'))
+      }
     });
     
     const firstCard = carouselEl.querySelector('.card') as HTMLDivElement;
@@ -85,13 +98,61 @@ export const Carousel:React.FC<Carousel> = ({
 
     if(showDots) {
       const idx = Math.round(carouselEl.scrollLeft / firstCardWidth);
-      if(idx !== activeDot && scrolling) {
+      if(idx !== activeDot) {
         carouselEl.scrollLeft = firstCardWidth * activeDot
-        setScrolling(false);
-        setActiveDot(idx);
       }
     }
-  }, [cards, activeDot, showDots, scrolling]);
+
+    // Generic recursive finder for first match
+    function findFirst<T>(
+      node: React.ReactNode,
+      predicate: (el: React.ReactElement<any>) => T | undefined
+    ): T | undefined {
+      if (!node) return undefined;
+      if (Array.isArray(node)) {
+        for (const child of node) {
+          const found = findFirst(child, predicate);
+          if (found !== undefined) return found;
+        }
+      } else if (React.isValidElement(node)) {
+        const el = node as React.ReactElement<any>;
+        const result = predicate(el);
+        if (result !== undefined) return result;
+        return findFirst((el.props as any).children, predicate);
+      }
+      return undefined;
+    }
+
+    if (bigThumbs) {
+      const thumbsArr: string[] = [];
+      const titlesArr: string[] = [];
+      Children.forEach(children, (child: any) => {
+        thumbsArr.push(
+          findFirst(child.props.children, el => {
+            const elem = el as React.ReactElement<any>;
+            return elem.type === 'img' && elem.props && elem.props.src ? elem.props.src : undefined;
+          }) || ''
+        );
+        titlesArr.push(
+          findFirst(child.props.children, el => {
+            const elem = el as React.ReactElement<any>;
+            if ((elem.type === 'h1' || elem.type === 'h2') && elem.props && elem.props.children) {
+              if (typeof elem.props.children === 'string') return elem.props.children;
+              if (Array.isArray(elem.props.children)) return elem.props.children.join(' ');
+              // fallback: try recursion
+              return findFirst(elem.props.children, el2 => {
+                const e2 = el2 as React.ReactElement<any>;
+                return typeof e2.props.children === 'string' ? e2.props.children : undefined;
+              });
+            }
+            return undefined;
+          }) || ''
+        );
+      });
+      setThumbs(thumbsArr);
+      setTitles(titlesArr);
+    }
+  }, [cards, activeDot, showDots, bigThumbs, children]);
 
   let isDragging = false;
   let startX: number;
@@ -123,16 +184,12 @@ export const Carousel:React.FC<Carousel> = ({
 
   const handleArrowClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const btn = e.currentTarget as HTMLButtonElement;
-    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
+    const firstCardWidth = (carousel.current?.querySelector('.card') as HTMLDivElement).offsetWidth;
     carousel.current.scrollLeft += btn.id.includes('-left') ? -firstCardWidth : firstCardWidth;
-  };
-
-  const handleScroll = () => {
-    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
-    const idx = Math.round(carousel.current.scrollLeft / firstCardWidth);
-    if(idx !== activeDot && !isDragging && !scrolling) {
-      setActiveDot(idx);
-    }
+    setTimeout(() => {
+      const newActiveDot = Math.round(carousel.current.scrollLeft / firstCardWidth);
+      setActiveDot(newActiveDot)
+    }, 300);
   };
   
   return (
@@ -140,8 +197,36 @@ export const Carousel:React.FC<Carousel> = ({
       className={`ijrc-carousel-wrapper${customClass ? ' ' + customClass : ''}`}
       style={carouselStyle.wrapper}
     >
-      <div>
-        {showButtons &&
+      <div className={bigThumbs ? 'flex gas' : ''}>
+        {bigThumbs && (
+          <ul className="thumbs">
+            {[...Array(Children.toArray(children).length - (bigThumbs ? 1 : cards) + 1)].map((_, i) => (
+              <li key={i}>
+                <button
+                  aria-label={`${i + 1} of ${Children.toArray(children).length - (bigThumbs ? 1 : cards) + 1}`}
+                  className={`thumb${i === activeDot ? ' active' : ''}`}
+                  onClick={() => setActiveDot(i)}
+                >
+                  {bigThumbs && (
+                    <>
+                      {thumbs.some(thumb => thumb !== '') &&
+                        <span className="thumb-img">
+                          {thumbs[i] && (
+                            <img draggable="false" src={thumbs[i]} alt={thumbs[i] && `Thumbnail ${i + 1}`} />
+                          )}
+                        </span>
+                      }
+                      <span>
+                        {titles[i]}
+                      </span>
+                    </>
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {showButtons && !bigThumbs &&
           <button
             className='carousel-arrow left'
             id={`${id}-carousel-left`}
@@ -159,11 +244,10 @@ export const Carousel:React.FC<Carousel> = ({
           onPointerDown={dragStart}
           onPointerMove={dragging}
           onPointerUp={dragStop}
-          onScroll={handleScroll}
         >
           {children}
         </div>
-        {showButtons &&
+        {showButtons && !bigThumbs &&
           <button
             className='carousel-arrow right'
             id={`${id}-carousel-right`}
@@ -174,19 +258,20 @@ export const Carousel:React.FC<Carousel> = ({
           </button>
         }
       </div>
-      {showDots && (
+      {showDots && !bigThumbs && (
         <ul className="dots">
           {[...Array(Children.toArray(children).length - cards + 1)].map((_, i) => (
             <li key={i}>
               <button
                 aria-label={`${i + 1} of ${Children.toArray(children).length - cards + 1}`}
                 className={`dot${i === activeDot ? ' active' : ''}`}
-                onPointerUp={() => {setActiveDot(i); setScrolling(i !== activeDot);}}
+                onClick={() => setActiveDot(i)}
               />
             </li>
           ))}
         </ul>
       )}
+    
     </div>
   );
 };
