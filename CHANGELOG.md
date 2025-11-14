@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/Igor-J86/react-carousel/compare/v1.9.0...v1.9.1) (2025-11-14)
+
+
+### Bug Fixes
+
+* set justify-content flex-start on thumbs ([c1a3e4a](https://github.com/Igor-J86/react-carousel/commit/c1a3e4ad7d8bdf9423b1f5a2131e67dff8b3f9c4))
+
 # [1.9.0](https://github.com/Igor-J86/react-carousel/compare/v1.8.4...v1.9.0) (2025-11-14)
 
 
