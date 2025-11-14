@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/Igor-J86/react-carousel/compare/v1.8.4...v1.9.0) (2025-11-14)
+
+
+### Features
+
+* add big thumbs mode + improve logic ([2b1a0ba](https://github.com/Igor-J86/react-carousel/commit/2b1a0ba68c4ef2a24fa846449e9ed20b99118b20))
+
 ## [1.8.4](https://github.com/Igor-J86/react-carousel/compare/v1.8.3...v1.8.4) (2025-09-29)
 
 
