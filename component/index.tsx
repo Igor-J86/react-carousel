@@ -29,7 +29,7 @@ root.render(
     <Carousel bigThumbs>
       <div>
         <h2>New functionality available!</h2>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           <div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           </div>
@@ -38,14 +38,14 @@ root.render(
       </div>
       <div>
         <h2>Coming soon</h2>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <img src="https://picsum.photos/300/200?random=2" alt="Thumbnail 2" />
         </div>
       </div>
       <div>
         <h2>This is cool</h2>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <img src="https://picsum.photos/300/200?random=3" alt="Thumbnail 3" />
           <img src="https://picsum.photos/300/200?random=4" alt="Thumbnail 4" />
@@ -53,7 +53,7 @@ root.render(
       </div>
       <div>
         <h2>Make component versatile</h2>
-        <div className='flex'>
+        <div className='flex flex-wrap'>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
           <img src="https://picsum.photos/300/200?random=5" alt="Thumbnail 5" />
         </div>

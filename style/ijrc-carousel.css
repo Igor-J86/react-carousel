@@ -27,6 +27,10 @@
   & .flex {
     display: flex;
   }
+  
+  & .flex-wrap {
+    flex-wrap: wrap;
+  }
 
   & .gas {
     gap: 0.5rem;
@@ -75,6 +79,7 @@
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;
+      flex: 1 1 38rem;
 
       &::-webkit-scrollbar {
         display: none;
@@ -119,15 +124,15 @@
 
   & .thumbs {
     display: flex;
-    flex-direction: column;
     justify-content: space-evenly;
     list-style: none;
     gap: 2px;
     margin: 10px 0 20px;
     padding: 0;
+    flex: 1 1 0%;
+    flex-wrap: wrap;
     & li {
-      height: 100%;
-      width: 12rem;
+      flex: 1 1 12rem;
       & .thumb {
         background: var(--ijrc-light-bg);
         border: none;

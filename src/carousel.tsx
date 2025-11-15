@@ -41,6 +41,7 @@ export const Carousel:React.FC<Carousel> = ({
   const carousel = useRef<HTMLDivElement>(null);
   const [cards, setCards] = useState(propCards);
   const [activeDot, setActiveDot] = useState(0)
+  const [disableScrollSync, setDisableScrollSync] = useState(false);
   const [thumbs, setThumbs] = useState<string[]>([]);
   const [titles, setTitles] = useState<string[]>([]);
 
@@ -191,13 +192,20 @@ export const Carousel:React.FC<Carousel> = ({
       setActiveDot(newActiveDot)
     }, 300);
   };
-  
+
+  const handleScroll = () => {
+    if (disableScrollSync) return;
+    const firstCardWidth = (carousel.current.querySelector('.card') as HTMLDivElement).offsetWidth;
+    const newActiveDot = Math.round(carousel.current.scrollLeft / firstCardWidth);
+    setActiveDot(newActiveDot);
+  };
+
   return (
     <div
       className={`ijrc-carousel-wrapper${customClass ? ' ' + customClass : ''}`}
       style={carouselStyle.wrapper}
     >
-      <div className={bigThumbs ? 'flex gas' : ''}>
+      <div className={bigThumbs ? 'flex flex-wrap gas' : ''}>
         {bigThumbs && (
           <ul className="thumbs">
             {[...Array(Children.toArray(children).length - (bigThumbs ? 1 : cards) + 1)].map((_, i) => (
@@ -205,7 +213,13 @@ export const Carousel:React.FC<Carousel> = ({
                 <button
                   aria-label={`${i + 1} of ${Children.toArray(children).length - (bigThumbs ? 1 : cards) + 1}`}
                   className={`thumb${i === activeDot ? ' active' : ''}`}
-                  onClick={() => setActiveDot(i)}
+                  onClick={() => {
+                    setDisableScrollSync(true);
+                    setActiveDot(i);
+                    setTimeout(() => {
+                      setDisableScrollSync(false);
+                    }, 300);
+                  }}
                 >
                   {bigThumbs && (
                     <>
@@ -244,6 +258,7 @@ export const Carousel:React.FC<Carousel> = ({
           onPointerDown={dragStart}
           onPointerMove={dragging}
           onPointerUp={dragStop}
+          onScroll={handleScroll}
         >
           {children}
         </div>
@@ -265,7 +280,13 @@ export const Carousel:React.FC<Carousel> = ({
               <button
                 aria-label={`${i + 1} of ${Children.toArray(children).length - cards + 1}`}
                 className={`dot${i === activeDot ? ' active' : ''}`}
-                onClick={() => setActiveDot(i)}
+                onClick={() => {
+                  setDisableScrollSync(true);
+                  setActiveDot(i);
+                  setTimeout(() => {
+                    setDisableScrollSync(false);
+                  }, 300);
+                }}
               />
             </li>
           ))}
