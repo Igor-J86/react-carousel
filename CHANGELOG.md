@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/Igor-J86/react-carousel/compare/v1.9.2...v1.9.3) (2025-11-15)
+
+
+### Bug Fixes
+
+* adjust styling for responsiveness ([42aba5e](https://github.com/Igor-J86/react-carousel/commit/42aba5e9feac06e544b721d3000e09023e317427))
+
 ## [1.9.2](https://github.com/Igor-J86/react-carousel/compare/v1.9.1...v1.9.2) (2025-11-15)
 
 
