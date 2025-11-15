@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/Igor-J86/react-carousel/compare/v1.9.1...v1.9.2) (2025-11-15)
+
+
+### Bug Fixes
+
+* revert handleScroll function for onscroll ([cbae26a](https://github.com/Igor-J86/react-carousel/commit/cbae26a41bc224b82457e8e11e75e255a36c8de5))
+
 ## [1.9.1](https://github.com/Igor-J86/react-carousel/compare/v1.9.0...v1.9.1) (2025-11-14)
 
 
